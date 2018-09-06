@@ -73,15 +73,21 @@ Session::checkSession();
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#UpdatePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
-            <span class="nav-link-text">Update Pages</span>
+            <span class="nav-link-text">Pages</span>
           </a>
           <ul class="sidenav-second-level collapse" id="UpdatePages">
             <li>
-              <a href="index.php">About us</a>
+              <a href="addpage.php">Add New Page</a>
             </li>
-            <li>
-              <a href="index.php">Contact Us</a>
-            </li>
+            <?php
+               $query = "SELECT * FROM Page";
+               $pages = $db->select($query);
+               if($pages){
+                 while($result = $pages->fetch_assoc()){
+
+            ?>
+            <li><a href="page.php?pageid=<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a></li>
+          <?php } } ?>
           </ul>
         </li>
 
@@ -131,7 +137,7 @@ Session::checkSession();
         </li>
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="index.php">
+          <a class="nav-link" href="inbox.php">
             <i class="fa fa-fw fa-link"></i>
             <span class="nav-link-text">Захидал</span>
           </a>

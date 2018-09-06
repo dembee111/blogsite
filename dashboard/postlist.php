@@ -54,13 +54,15 @@
                <tr>
                  <td><?php echo $i; ?></td>
                  <td><?php echo $result['name']; ?></td>
-                 <td><?php echo $result['title']; ?></td>
+                 <td><a href="editpost.php?editpostid=<?php echo $result['id']; ?>"><?php echo $result['title']; ?></a></td>
                  <td><?php echo $fm->textShorten($result['body'], 50); ?></td>
                  <td><img src="<?php echo $result['image']; ?>" height="60px" width="80px" /></td>
                  <td><?php echo $result['author']; ?></td>
                  <td><?php echo $result['tags']; ?></td>
                  <td><?php echo $fm->formatDate($result['date']); ?></td>
-                 <td><a href="" class="btn btn-info">&nbsp;  Edit  &nbsp;</a ><a href="" class="btn btn-danger">Delete</a></td>
+                 <td>
+                   <a href="editpost.php?editpostid=<?php echo $result['id']; ?>" class="btn btn-info">&nbsp;  Edit  &nbsp;</a >
+                   <a onclick="return confirm('Are you sure to Delete?'); " href="deletepost.php?delpostid=<?php echo $result['id']; ?>" class="btn btn-danger">Delete</a></td>
                </tr>
             <?php } } ?>
              </tbody>
