@@ -8,6 +8,16 @@
         </li>
         <li class="breadcrumb-item active">All User List</li>
       </ol>
+      <?php if (isset($_GET['deluser'])) {
+         $delid = $_GET['deluser'];
+         $delquery = "DELETE from Users WHERE id='$delid'";
+         $deldata = $db->delete($delquery);
+         if($deldata){
+           echo "<span class='success col-md-5 mb-3'>User Deleted Successfully </span>";
+         }else{
+            echo "<span class='error col-md-5 mb-3'>User Not Deleted </span>";
+         }
+      } ?>
       <!-- Table start-->
       <div class="card mb-3">
        <div class="card-header">
@@ -18,41 +28,62 @@
              <thead>
                <tr>
                  <th>id</th>
-                 <th>Category Name</th>
-                 <th>Title</th>
-                 <th>Body</th>
-                 <th>Image</th>
-                 <th>Author</th>
-                 <th>Tag</th>
+                 <th>Name</th>
+                 <th>Username</th>
+                 <th>Email</th>
+                 <th>Details</th>
+                 <th>Role</th>
                  <th>Date</th>
+                 <th>Actions</th>
                </tr>
              </thead>
              <tfoot>
                <tr>
                  <th>id</th>
-                 <th>Category Name</th>
-                 <th>Title</th>
-                 <th>Body</th>
-                 <th>Image</th>
-                 <th>Author</th>
-                 <th>Tag</th>
+                 <th>Name</th>
+                 <th>Username</th>
+                 <th>Email</th>
+                 <th>Details</th>
+                 <th>Role</th>
                  <th>Date</th>
+                 <th>Actions</th>
                </tr>
              </tfoot>
              <tbody>
+               <?php
+               $query = "SELECT * FROM Users Order by id ASC";
+               $userlist = $db->select($query);
+               if ($userlist) {
+                 $i =0;
+                 while($result = $userlist->fetch_assoc()){
+                   $i++;
+               ?>
                <tr>
-                 <td>1</td>
-                 <td>Javascript</td>
-                 <td>Tsahim nom</td>
-                 <td>There are many variations of passages of Lorem Ipsum available,
-                   but the majority have suffered alteration in some form, by injected humour,
-                   or randomised words which don't look even slightly believable.</td>
-                   <td>Image/name</td>
-                 <td>Admin</td>
-                 <td>Programming, Design</td>
-                 <td>2018.10.16</td>
+                 <td><?php echo $i; ?></td>
+                 <td><?php echo $result['name']; ?></td>
+                 <td><?php echo $result['username']; ?></td>
+                 <td><?php echo $result['email']; ?></td>
+                 <td><?php echo $fm->textShorten($result['details'], 30); ?></td>
+                 <td>
+                   <?php
+                         if ($result['role'] == '3') {
+                           echo "Admin";
+                         }elseif($result['role'] == '1'){
+                           echo "Author";
+                         }elseif($result['role'] == '2'){
+                           echo "Editor";
+                         }
+                    ?>
+               </td>
+                 <td><?php echo $result['date']; ?></td>
+                 <td>
+                   <a href="viewUser.php?userid=<?php echo $result['id']; ?>" class="btn btn-info">&nbsp;  View  &nbsp;</a >
+                  <?php if (Session::get('userRole') == '3') { ?>
+                   <a onclick="return confirm('Are you sure to Delete?'); " href="?deluser=<?php echo $result['id']; ?>" class="btn btn-danger">Delete</a>
+                 <?php } ?>
+                 </td>
                </tr>
-
+              <?php } } ?>
              </tbody>
            </table>
          </div>

@@ -1,5 +1,6 @@
 <?php include 'inc/header.php'; ?>
 <?php include 'inc/slider.php'; ?>
+
 <?php
 	 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		 $firstname =$fm->validation($_POST['firstname']);

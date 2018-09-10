@@ -1,26 +1,7 @@
 
 <?php include 'inc/header.php'; ?>
 <?php include 'inc/slider.php'; ?>
-<style>
-.pagination{
-  display: block;font-size: 20px; margin-top: 10px; padding: 10px; text-align: center;
-}
-.pagination a{
-   background: #e6af4b none repeat scroll 0 0;
-   border: 1px solid #a7700c;
-   border-radius: 3px;
-   text-decoration: none;
-   color: #333;
-   padding: 2px 10px;
-   margin-left:2px;
 
-}
-
-.pagination a:hover{
-   background: #be8723 none repeat scroll 0 0;
-   color: #fff;
-}
-</style>
 	<div class="contentsection contemplete clear">
 		<div class="maincontent clear">
     <!--pagination-->
@@ -60,10 +41,12 @@
 
     <!--pagination----->
       <?php
+
       $query = "SELECT * FROM post";
       $result = $db->select($query);
       $total_rows = mysqli_num_rows($result);
       $total_pages = ceil($total_rows/$per_page);
+
       echo "<span class='pagination'><a href='index.php?page=1'>".'First Page'."</a>";
 
        for($i = 1; $i<= $total_pages; $i++){

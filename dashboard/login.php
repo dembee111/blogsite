@@ -35,26 +35,25 @@ Session::checkLogin();
         <?php
            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
              $username =$fm->validation($_POST['username']);
-             $password = $fm->validation(md5($_POST['password']));
-
+             $password =$fm->validation(md5($_POST['password']));
              $username = mysqli_real_escape_string($db->link, $username);
              $password = mysqli_real_escape_string($db->link, $password);
+
 
              $query ="SELECT * FROM users WHERE username = '$username' AND password='$password'";
 
              $result = $db->select($query);
              if($result != false){
-               $value = mysqli_fetch_array($result);
-               $row = mysqli_num_rows($result);
+               // $value = mysqli_fetch_array($result);
+               // $row = mysqli_num_rows($result);
+                  $value = $result->fetch_assoc();
 
-               if($row > 0){
                     Session::set("login", true);
                     Session::set("username", $value['username']);
                     Session::set("userId", $value['id']);
+                    Session::set("userRole", $value['role']);
                     header("Location:index.php");
-               }else{
-                  echo "<span style='color:red; font-size:18px;'>NO Result found !!.</span>";
-               }
+
              }else{
                echo "<span style='color:red; font-size:18px;'>Username or Password not matched !!.</span>";
              }
@@ -80,7 +79,7 @@ Session::checkLogin();
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="register.html">Register an Account</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+          <a class="d-block small" href="forgetpass.php">Forgot Password?</a>
         </div>
       </div>
     </div>

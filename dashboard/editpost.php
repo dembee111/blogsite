@@ -25,6 +25,7 @@
         $body = mysqli_real_escape_string($db->link, $_POST['body']);
         $tags = mysqli_real_escape_string($db->link, $_POST['tags']);
         $author = mysqli_real_escape_string($db->link, $_POST['author']);
+        $userid = mysqli_real_escape_string($db->link, $_POST['userid']);
 
 
         $permited  = array('jpg', 'jpeg', 'png', 'gif');
@@ -37,7 +38,7 @@
         $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
         $uploaded_image = "upload/".$unique_image;
 
-        if ($title == "" || $catid == "" ||  $body == "" || $tags=="" || $author =="") {
+        if ($title == "" || $catid == "" ||  $body == "" || $tags=="" || $author =="" || $userid =="") {
           echo "<span class='error col-md-5 mb-3'>Field must not be empty! </span>";
         }else{
 
@@ -60,6 +61,7 @@
                         body = '$body',
                         image = '$uploaded_image',
                         author = '$author',
+                        userid = '$userid',
                         tags = '$tags'
                          WHERE id = '$postid'";
 
@@ -80,6 +82,7 @@
                           title = '$title',
                           body = '$body',
                           author = '$author',
+                          userid = '$userid',
                           tags = '$tags'
                            WHERE id = '$postid'";
 
@@ -160,6 +163,12 @@
           </div>
 
           <div class="col-md-5 mb-3">
+            <label for="validationCustom01">Author</label>
+            <input type="text" class="form-control" name="author" readonly id="validationCustom06" value="<?php echo Session::get('username'); ?>" required>
+            <input type="hidden" class="form-control" name="userid" readonly id="validationCustom06" value="<?php echo Session::get('userId'); ?>" required>
+          </div>
+
+          <div class="col-md-5 mb-3">
             <label for="validationCustom05">Textarea</label>
             <textarea class="form-control" name="body" rows="9" id="validationCustom05" required><?php echo $postresult['body']; ?></textarea>
             <div class="invalid-feedback">
@@ -182,18 +191,9 @@
             </small>
           </div>
 
-          <div class="col-md-5 mb-3">
-            <label for="validationCustom01">Author</label>
-            <input type="text" class="form-control" name="author" id="validationCustom06" value="<?php echo $postresult['author']; ?>" required>
-            <div class="invalid-feedback">
-              Please provide a valid Author.
-            </div>
-            <small id="titleHelpInline" class="text-muted">
-              Must be 5-20 characters long.
-            </small>
-          </div>
 
   <button class="btn btn-primary" type="submit">Update Post</button>
+  <a href="postlist.php"><button class="btn btn-warning" type="button">&nbsp;  Цуцлах  &nbsp;</button></a> 
 </form>
 <?php } ?>
 

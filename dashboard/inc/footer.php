@@ -24,6 +24,7 @@
 <!-- Custom scripts for this page-->
 <script src="js/sb-admin-datatables.min.js"></script>
 <script src="js/sb-admin-charts.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </div>
 </body>

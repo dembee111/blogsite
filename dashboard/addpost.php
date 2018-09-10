@@ -17,6 +17,7 @@
         $body = mysqli_real_escape_string($db->link, $_POST['body']);
         $tags = mysqli_real_escape_string($db->link, $_POST['tags']);
         $author = mysqli_real_escape_string($db->link, $_POST['author']);
+        $userid = mysqli_real_escape_string($db->link, $_POST['userid']);
 
 
         $permited  = array('jpg', 'jpeg', 'png', 'gif');
@@ -29,7 +30,7 @@
         $unique_image = substr(md5(time()), 0, 10).'.'.$file_ext;
         $uploaded_image = "upload/".$unique_image;
 
-        if ($title == "" || $catid == "" ||  $body == "" || $tags=="" || $author =="" || $file_name =="") {
+        if ($title == "" || $catid == "" ||  $body == "" || $tags=="" || $author =="" ||  $userid =="" || $file_name =="") {
           echo "<span class='error col-md-5 mb-3'>Field must not be empty! </span>";
         }
         elseif ($file_size >1048567)
@@ -43,7 +44,7 @@
         else
         {
             move_uploaded_file($file_temp, $uploaded_image);
-            $query = "INSERT INTO Post(category_id, title, body, image, author, tags) VALUES('$catid', '$title', '$body', '$uploaded_image', '$author', '$tags')";
+            $query = "INSERT INTO Post(category_id, title, body, image, author, tags, userid) VALUES('$catid', '$title', '$body', '$uploaded_image', '$author', '$userid','$tags')";
             $inserted_rows = $db->insert($query);
                 if ($inserted_rows)
                 {
@@ -107,6 +108,13 @@
           </div>
 
           <div class="col-md-5 mb-3">
+            <label for="validationCustom01">Author</label>
+            <input type="text" class="form-control" name="author" readonly id="validationCustom06" value="<?php echo Session::get('username'); ?>" required>
+            <input type="hidden" class="form-control" name="userid" readonly id="validationCustom06" value="<?php echo Session::get('userId'); ?>" required>
+          </div>         
+
+
+          <div class="col-md-5 mb-3">
             <label for="validationCustom05">Textarea</label>
             <textarea class="form-control" name="body" rows="9" id="validationCustom05" placeholder="Enter Post Body" required></textarea>
             <div class="invalid-feedback">
@@ -129,16 +137,7 @@
             </small>
           </div>
 
-          <div class="col-md-5 mb-3">
-            <label for="validationCustom01">Author</label>
-            <input type="text" class="form-control" name="author" id="validationCustom06" placeholder="Enter Author name" required>
-            <div class="invalid-feedback">
-              Please provide a valid Author.
-            </div>
-            <small id="titleHelpInline" class="text-muted">
-              Must be 5-20 characters long.
-            </small>
-          </div>
+
 
   <button class="btn btn-primary" type="submit">Submit form</button>
 </form>

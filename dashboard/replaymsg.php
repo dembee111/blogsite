@@ -68,6 +68,7 @@
 
 
     <button class="btn btn-primary" type="submit">Илгээх</button>
+    <a href="inbox.php"><button class="btn btn-warning" type="button">Цуцлах</button></a> 
   <?php } } ?>
 </form>
 
